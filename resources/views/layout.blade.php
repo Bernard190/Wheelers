@@ -25,7 +25,7 @@
                         <a class="nav-link {{ request()->routeIs('news') ? 'active' : '' }}" href="{{ route('news') }}">News</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('cars') ? 'active' : '' }}" href="{{ route('cars') }}">Cars</a>
+                        <a class="nav-link {{ request()->routeIs('cars') ? 'active' : '' }}" href="{{ route('cars.index') }}">Cars</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('support') ? 'active' : '' }}" href="{{ route('support') }}">Support</a>
