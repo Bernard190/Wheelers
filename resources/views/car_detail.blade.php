@@ -9,8 +9,8 @@
 <p><strong>Description:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 
 <div>
-    <p>Speed: ████████</p>
-    <p>Durability: █████</p>
-    <p>Boost: ████</p>
+    <p>Speed: </p>
+    <p>Durability: </p>
+    <p>Boost: </p>
 </div>
 @endsection
