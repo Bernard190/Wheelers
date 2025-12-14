@@ -14,7 +14,7 @@
                     </p>
                     <a href="{{ route('car.detail.' . app()->getLocale(), $car->id) }}"
                        class="btn btn-primary">
-                        {{ __('cars.view_detail') }}
+                        {{ __('cars.view') }}
                     </a>
                 </div>
             </div>
