@@ -25,7 +25,7 @@
                         <a class="nav-link {{ request()->routeIs('news') ? 'active' : '' }}" href="{{ route('news') }}">{{ __('navbar.news') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('cars') ? 'active' : '' }}" href="{{ route('cars.index') }}">{{ __('navbar.cars') }}</a>
+                       <a class="nav-link {{ request()->routeIs('cars.id', 'cars.en') ? 'active' : '' }}" href="{{ route('cars.' . app()->getLocale()) }}">{{ __('navbar.cars') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('support') ? 'active' : '' }}" href="{{ route('support') }}">{{ __('navbar.support') }}</a>

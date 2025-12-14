@@ -13,15 +13,15 @@ Route::get('/home/en', [PageController::class, 'homeEn'])->name('home');
 Route::get('/news/id', [PageController::class, 'newsID'])->name('news');
 Route::get('/news/en', [PageController::class, 'newsEn'])->name('news');
 
-Route::get('/cars/id', [PageController::class, 'carsID'])->name('cars');
-Route::get('/cars/en', [PageController::class, 'carsEn'])->name('cars');
+Route::get('/cars/id', [PageController::class, 'carsID'])->name('cars.id');
+Route::get('/cars/en', [PageController::class, 'carsEn'])->name('cars.en');
 
 Route::get('/cars/id/{id}', [PageController::class, 'carDetailID'])
         ->whereNumber('id')
-        ->name('car.detail');
+        ->name('car.detail.id');
 Route::get('/cars/en/{id}', [PageController::class, 'carDetailEn'])
         ->whereNumber('id')
-        ->name('car.detail');
+        ->name('car.detail.en');
 
 Route::get('/support/id', [PageController::class, 'supportID'])->name('support');
 Route::get('/support/en', [PageController::class, 'supportEn'])->name('support');
