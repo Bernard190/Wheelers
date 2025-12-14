@@ -13,9 +13,21 @@ class PageController extends Controller
         $cars = Car::latest()->take(3)->get()->map(function ($car) {
         $car->short_description = substr($car->description, 0, 100) . '...';
         return $car;
-    });
+        });
 
-    return view('home', compact('cars'));
+        return view('home', compact('cars'));
+    }
+
+    public function homeID()
+    {
+        App::setLocale('id');
+        return $this->home();
+    }
+
+    public function homeEn()
+    {
+        App::setLocale('en');
+        return $this->home();
     }
 
     public function news(Request $request)
@@ -47,18 +59,25 @@ class PageController extends Controller
 
     public function supportID()
     {
-        App::setlocale('en');
+        App::setlocale('id');
         return view('support');
     }
 
     public function supportEn()
     {
-        App::setlocale('id');
+        App::setlocale('en');
         return view('support');
     }
 
-    public function login()
+    public function loginID()
     {
+        App::setlocale('id');
+        return view('login');
+    }
+
+    public function loginEn()
+    {
+        App::setlocale('en');
         return view('login');
     }
 }
