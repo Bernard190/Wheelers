@@ -1,23 +1,24 @@
 @extends('layout')
 
 @section('content')
-<h1>{{ __('cars.title') }}</h1>
+<h1 class="mb-4">{{ __('cars.title') }}</h1>
 
-<div class="car-grid">
-    <div>
-        <a href="{{ route('car.detail.' . app()->getLocale(), 1) }}">
-            {{ __('cars.car') }} 1
-        </a>
-    </div>
-    <div>
-        <a href="{{ route('car.detail.' . app()->getLocale(), 2) }}">
-            {{ __('cars.car') }} 2
-        </a>
-    </div>
-    <div>
-        <a href="{{ route('car.detail.' . app()->getLocale(), 3) }}">
-            {{ __('cars.car') }} 3
-        </a>
-    </div>
+<div class="row">
+    @foreach ($cars as $car)
+        <div class="col-sm-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ $car->name }}</h5>
+                    <p class="card-text">
+                        {{ Str::limit($car->description, 100) }}
+                    </p>
+                    <a href="{{ route('car.detail.' . app()->getLocale(), $car->id) }}"
+                       class="btn btn-primary">
+                        {{ __('cars.view_detail') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    @endforeach
 </div>
 @endsection
