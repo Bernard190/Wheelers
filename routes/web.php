@@ -2,11 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\NewsController;
 
 //car_detail controller
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CarImageController;
+
 
 Route::get('/home', [PageController::class, 'home'])->name('home');
 
