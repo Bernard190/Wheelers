@@ -10,7 +10,7 @@ use App\Http\Controllers\CarImageController;
 
 Route::get('/home', [PageController::class, 'home'])->name('home');
 
-Route::get('/news', [PageController::class, 'news'])->name('news');
+// Route::get('/news', [PageController::class, 'news'])->name('news');
 
 Route::get('/cars', [PageController::class, 'cars'])->name('cars');
 
