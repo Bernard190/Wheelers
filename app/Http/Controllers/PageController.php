@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
+use Illuminate\Support\Facades\App;
 
 class PageController extends Controller
 {
@@ -44,8 +45,15 @@ class PageController extends Controller
         return view('car_detail', compact('car'));
     }
 
-    public function support()
+    public function supportID()
     {
+        App::setlocale('en');
+        return view('support');
+    }
+
+    public function supportEn()
+    {
+        App::setlocale('id');
         return view('support');
     }
 

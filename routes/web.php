@@ -9,7 +9,6 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CarImageController;
 
-
 Route::get('/home', [PageController::class, 'home'])->name('home');
 
 // Route::get('/news', [PageController::class, 'news'])->name('news');
@@ -20,7 +19,8 @@ Route::get('/cars/{id}', [PageController::class, 'carDetail'])
         ->whereNumber('id')
         ->name('car.detail');
 
-Route::get('/support', [PageController::class, 'support'])->name('support');
+Route::get('/support/en', [PageController::class, 'supportID'])->name('support');
+Route::get('/support/id', [PageController::class, 'supportEn'])->name('support');
 
 Route::get('/login', [PageController::class, 'login'])->name('login');
 
