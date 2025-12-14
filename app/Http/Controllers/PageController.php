@@ -43,6 +43,18 @@ class PageController extends Controller
         return view('news', compact('cars', 'recentTopics'));
     }
 
+    public function newsID(Request $request)
+    {
+        App::setLocale('id');
+        return $this->news($request);
+    }
+
+    public function newsEn(Request $request)
+    {
+        App::setLocale('en');
+        return $this->news($request);
+    }
+
     public function cars()
     {
         $cars = Car::all();

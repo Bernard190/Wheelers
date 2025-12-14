@@ -3,22 +3,22 @@
 @section('content')
 
     <div class="container my-5">
-    <form action="{{ url('/news') }}" method="GET" class="mb-4">
+    <form action="{{ url()->current() }}" method="GET" class="mb-4">
         <div class="input-group">
             <input type="text"
                    name="q"
                    class="form-control"
-                   placeholder="Search news..."
+                   placeholder="{{ __('news.search_placeholder') }}"
                    value="{{ request('q') }}">
 
             <button class="btn btn-outline-secondary" type="submit">
-                Search
+                {{ __('news.search_button') }}
             </button>
         </div>
     </form>
 
     <div class="mb-5">
-        <h3 class="mb-3">Recent Topics</h3>
+        <h3 class="mb-3">{{ __('news.recent_topics') }}</h3>
 
         <div class="row g-3">
             @foreach ($recentTopics as $topic)
@@ -34,7 +34,7 @@
                             </h6>
                             <a href="{{ url('/cars/' . $topic->id) }}"
                             class="btn btn-outline-dark btn-sm">
-                                View
+                                {{ __('news.view') }}
                             </a>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
     </div>
 
     <div>
-        <h3 class="mb-4">Trending News</h3>
+        <h3 class="mb-4">{{ __('news.trending_news') }}</h3>
 
         <div class="row g-4">
             @if ($cars->first())
@@ -61,7 +61,7 @@
                         </p>
                         <a href="{{ url('/cars/' . $cars->first()->id) }}"
                            class="btn btn-dark btn-sm">
-                            Read More
+                            {{ __('news.read_more') }}
                         </a>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                                             </p>
                                             <a href="{{ url('/cars/' . $car->id) }}"
                                                class="btn btn-outline-dark btn-sm">
-                                                Read
+                                                {{ __('news.read') }}
                                             </a>
                                         </div>
                                     </div>
@@ -98,7 +98,7 @@
                     @if ($cars->count() === 0)
                         <div class="col-12">
                             <div class="alert alert-secondary text-center">
-                                No results found.
+                                {{ __('news.no_results') }}
                             </div>
                         </div>
                     @endif

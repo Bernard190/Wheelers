@@ -12,7 +12,8 @@ use App\Http\Controllers\CarImageController;
 Route::get('/home/id', [PageController::class, 'homeID'])->name('home');
 Route::get('/home/en', [PageController::class, 'homeEn'])->name('home');
 
-Route::get('/news', [PageController::class, 'news'])->name('news');
+Route::get('/news/id', [PageController::class, 'newsID'])->name('news');
+Route::get('/news/en', [PageController::class, 'newsEn'])->name('news');
 
 Route::get('/cars', [PageController::class, 'cars'])->name('cars');
 
@@ -30,4 +31,3 @@ Route::get('/login/en', [PageController::class, 'loginEn'])->name('login');
 Route::resource('categories', CategoryController::class);
 Route::resource('cars', CarController::class);
 Route::resource('car_images', CarImageController::class);
-// Route::resource('news', NewsController::class);
