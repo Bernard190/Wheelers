@@ -62,6 +62,18 @@ class PageController extends Controller
         return view('cars', compact('cars'));
     }
 
+    public function carsID()
+    {
+        App::setLocale('id');
+        return $this->cars();
+    }
+
+    public function carsEn()
+    {
+        App::setLocale('en');
+        return $this->cars();
+    }
+
     public function carDetail($id)
     {
         $car = Car::findOrFail($id);
@@ -69,27 +81,39 @@ class PageController extends Controller
         return view('car_detail', compact('car'));
     }
 
+    public function carDetailID($id)
+    {
+        App::setLocale('id');
+        return $this->carDetail($id);
+    }
+
+    public function carDetailEn($id)
+    {
+        App::setLocale('en');
+        return $this->carDetail($id);
+    }
+
     public function supportID()
     {
-        App::setlocale('id');
+        App::setLocale('id');
         return view('support');
     }
 
     public function supportEn()
     {
-        App::setlocale('en');
+        App::setLocale('en');
         return view('support');
     }
 
     public function loginID()
     {
-        App::setlocale('id');
+        App::setLocale('id');
         return view('login');
     }
 
     public function loginEn()
     {
-        App::setlocale('en');
+        App::setLocale('en');
         return view('login');
     }
 }
