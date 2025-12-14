@@ -27,3 +27,4 @@ Route::get('/login', [PageController::class, 'login'])->name('login');
 Route::resource('categories', CategoryController::class);
 Route::resource('cars', CarController::class);
 Route::resource('car_images', CarImageController::class);
+Route::resource('news', NewsController::class);
