@@ -1,18 +1,24 @@
 @extends('layout')
 
 @section('content')
-<h1>{{ $car->name }}</h1>
+<div class="container py-5">
+    <h1 class="mb-4">{{ $car->name }}</h1>
 
-<img src="https://via.placeholder.com/400x200" alt="Car Image">
+    <div class="mb-4">
+        <img src="https://via.placeholder.com/400x200" alt="Car Image" class="img-fluid">
+    </div>
 
-<p>
-    <strong>{{ __('car.description') }}:</strong>
-    {{ $car->description }}
-</p>
+    <div class="mb-4">
+        <p>
+            <strong>{{ __('car.description') }}:</strong>
+            {{ $car->description }}
+        </p>
+    </div>
 
-<div>
-    <p>{{ __('car.speed') }}: {{ $car->speed ?? '-' }}</p>
-    <p>{{ __('car.durability') }}: {{ $car->durability ?? '-' }}</p>
-    <p>{{ __('car.boost') }}: {{ $car->boost ?? '-' }}</p>
+    <div>
+        <p><strong>{{ __('car.speed') }}:</strong> {{ $car->speed ?? '-' }}</p>
+        <p><strong>{{ __('car.durability') }}:</strong> {{ $car->durability ?? '-' }}</p>
+        <p><strong>{{ __('car.boost') }}:</strong> {{ $car->boost ?? '-' }}</p>
+    </div>
 </div>
 @endsection
