@@ -26,6 +26,14 @@ Route::get('/cars/en/{id}', [PageController::class, 'carDetailEn'])
 Route::get('/support/id', [PageController::class, 'supportID'])->name('support');
 Route::get('/support/en', [PageController::class, 'supportEn'])->name('support');
 
+Route::get('/news/id/{id}', [PageController::class, 'newsDetailID'])
+    ->whereNumber('id')
+    ->name('news.detail.id');
+
+Route::get('/news/en/{id}', [PageController::class, 'newsDetailEn'])
+    ->whereNumber('id')
+    ->name('news.detail.en');
+
 Route::get('/login/id', [PageController::class, 'loginID'])->name('login');
 Route::get('/login/en', [PageController::class, 'loginEn'])->name('login');
 

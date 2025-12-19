@@ -21,11 +21,16 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        \App\Models\Category::factory()->count(4)->create();
 
+        $categories = ['Sport','Muscle','Offroad','Electric'];
+        foreach ($categories as $name) {
+        \App\Models\Category::firstOrCreate(['name' => $name]);
+        }
         \App\Models\Car::factory()
             ->count(10)
             ->hasImages(3)
             ->create();
+        
+        \App\Models\News::factory()->count(10)->create();
     }
 }
