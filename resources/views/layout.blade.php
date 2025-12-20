@@ -1,50 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Wheelers</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #0b0d12;
+            color: #e6e6e6;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        .navbar {
+            height: 88px;
+            background: linear-gradient(to bottom, rgba(10,10,15,0.98), rgba(10,10,15,0.85));
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar-brand {
+            font-size: 1.65rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #d6d6d6;
+            padding: 0.75rem 1.25rem;
+        }
+
+        .navbar-nav .nav-link.active,
+        .navbar-nav .nav-link:hover {
+            color: #ffffff;
+        }
+
+        .lang-toggle {
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 22px;
+            padding: 6px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+            margin-right: 16px;
+        }
+
+        .lang-toggle:hover {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('home') }}">Wheelers</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="collapse navbar-collapse justify-content-center" id="mainNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">{{ __('navbar.home') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('news') ? 'active' : '' }}" href="{{ route('news') }}">{{ __('navbar.news') }}</a>
-                    </li>
-                    <li class="nav-item">
-                       <a class="nav-link {{ request()->routeIs('cars.id', 'cars.en') ? 'active' : '' }}" href="{{ route('cars.' . app()->getLocale()) }}">{{ __('navbar.cars') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('support') ? 'active' : '' }}" href="{{ route('support') }}">{{ __('navbar.support') }}</a>
-                    </li>
-                </ul>
-            </div>
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid px-5">
 
-            <ul class="navbar-nav ms-auto">
+        <a class="navbar-brand" href="{{ app()->getLocale() === 'id' ? url('/home/id') : url('/home/en') }}">
+            Wheelers
+        </a>
+
+        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-center" id="mainNav">
+            <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}">{{ __('navbar.login') }}</a>
+                    <a class="nav-link {{ request()->is('home/*') ? 'active' : '' }}"
+                       href="{{ app()->getLocale() === 'id' ? url('/home/id') : url('/home/en') }}">
+                        {{ __('navbar.home') }}
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('news/*') ? 'active' : '' }}"
+                       href="{{ app()->getLocale() === 'id' ? url('/news/id') : url('/news/en') }}">
+                        {{ __('navbar.news') }}
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('cars/*') ? 'active' : '' }}"
+                       href="{{ app()->getLocale() === 'id' ? url('/cars/id') : url('/cars/en') }}">
+                        {{ __('navbar.cars') }}
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('support/*') ? 'active' : '' }}"
+                       href="{{ app()->getLocale() === 'id' ? url('/support/id') : url('/support/en') }}">
+                        {{ __('navbar.support') }}
+                    </a>
                 </li>
             </ul>
         </div>
-    </nav>
 
-    <div class="content">
-        @yield('content')
+        <ul class="navbar-nav align-items-center">
+            <li class="nav-item">
+                <a class="lang-toggle"
+                   href="{{ str_replace('/' . app()->getLocale(), '/' . (app()->getLocale() === 'id' ? 'en' : 'id'), request()->getRequestUri()) }}">
+                    {{ app()->getLocale() === 'id' ? 'EN' : 'ID' }}
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('login/*') ? 'active' : '' }}"
+                   href="{{ app()->getLocale() === 'id' ? url('/login/id') : url('/login/en') }}">
+                    {{ __('navbar.login') }}
+                </a>
+            </li>
+        </ul>
+
     </div>
+</nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<div style="padding-top: 88px;">
+    @yield('content')
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

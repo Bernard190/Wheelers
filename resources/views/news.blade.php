@@ -2,90 +2,78 @@
 
 @section('content')
 
-    <div class="container my-5">
-    <form action="{{ url()->current() }}" method="GET" class="mb-4">
-        <div class="input-group">
+<div class="container my-5">
+
+    <form action="{{ url()->current() }}" method="GET" class="mb-5">
+        <div class="input-group input-group-lg shadow-sm">
             <input type="text"
                    name="q"
-                   class="form-control"
+                   class="form-control bg-dark text-light border-0"
                    placeholder="{{ __('news.search_placeholder') }}"
                    value="{{ request('q') }}">
-
-            <button class="btn btn-outline-secondary" type="submit">
+            <button class="btn btn-outline-light px-4" type="submit">
                 {{ __('news.search_button') }}
             </button>
         </div>
     </form>
 
-    <div class="mb-5">
-        <h3 class="mb-3">{{ __('news.recent_topics') }}</h3>
+    @if (!request('q') && $news->currentPage() == 1)
 
-        <div class="row g-3">
-            @foreach ($recentTopics as $topic)
-                <div class="col-md-3">
-                    <div class="card h-100">
-                        <img src="https://via.placeholder.com/300x200"
-                            class="card-img-top"
-                            alt="{{ $topic->name }}">
+        <div class="mb-5">
+            <h3 class="fw-bold mb-4 text-light">{{ __('news.trending_news') }}</h3>
 
-                        <div class="card-body text-center">
-                            <h6 class="card-title mb-2">
-                                {{ $topic->name }}
-                            </h6>
-                            <a href="{{ url('/cars/' . $topic->id) }}"
-                            class="btn btn-outline-dark btn-sm">
-                                {{ __('news.view') }}
+            <div class="card border-0 shadow-lg overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-md-6">
+                        <img src="{{ $recentTopics->first()->image ?? 'https://via.placeholder.com/700x400' }}"
+                             class="w-100 h-100"
+                             style="object-fit: cover;"
+                             alt="{{ $recentTopics->first()->title }}">
+                    </div>
+                    <div class="col-md-6 bg-dark text-light">
+                        <div class="card-body d-flex flex-column h-100 p-4">
+                            <h4 class="fw-bold mb-3">
+                                {{ $recentTopics->first()->title }}
+                            </h4>
+                            <p class="text-secondary">
+                                {{ Str::limit(strip_tags($recentTopics->first()->content), 180) }}
+                            </p>
+                            <a href="{{ route('news.detail.' . app()->getLocale(), $recentTopics->first()->id) }}"
+                               class="btn btn-light mt-auto align-self-start px-4">
+                                {{ __('news.read_more') }}
                             </a>
                         </div>
                     </div>
                 </div>
-            @endforeach
-        </div>
-    </div>
-
-    <div>
-        <h3 class="mb-4">{{ __('news.trending_news') }}</h3>
-
-        <div class="row g-4">
-            @if ($cars->first())
-            <div class="col-md-6">
-                <div class="card h-100">
-                    <img src="https://via.placeholder.com/600x350"
-                         class="card-img-top"
-                         alt="{{ $cars->first()->name }}">
-
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $cars->first()->name }}</h5>
-                        <p class="card-text">
-                            {{ Str::limit($cars->first()->description, 150) }}
-                        </p>
-                        <a href="{{ url('/cars/' . $cars->first()->id) }}"
-                           class="btn btn-dark btn-sm">
-                            {{ __('news.read_more') }}
-                        </a>
-                    </div>
-                </div>
             </div>
-            @endif
-            <div class="col-md-6">
-                <div class="row g-4">
-                    @foreach ($cars->skip(1)->take(2) as $car)
-                        <div class="col-12">
-                            <div class="card">
+        </div>
+
+        <div class="mb-5">
+            <h3 class="fw-bold mb-4 text-light">{{ __('news.recent_topics') }}</h3>
+
+            <div id="recentTopicsHero" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner rounded shadow-lg overflow-hidden">
+
+                    @foreach ($trending as $index => $item)
+                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                            <div class="card border-0">
                                 <div class="row g-0">
-                                    <div class="col-5">
-                                        <img src="https://via.placeholder.com/300x200"
-                                             class="img-fluid rounded-start"
-                                             alt="{{ $car->name }}">
+                                    <div class="col-md-7">
+                                        <img src="{{ $item->image ?? 'https://via.placeholder.com/800x450' }}"
+                                             class="w-100 h-100"
+                                             style="object-fit: cover; min-height: 360px;"
+                                             alt="{{ $item->title }}">
                                     </div>
-                                    <div class="col-7">
-                                        <div class="card-body">
-                                            <h6 class="card-title">{{ $car->name }}</h6>
-                                            <p class="card-text small text-muted">
-                                                {{ Str::limit($car->description, 80) }}
+                                    <div class="col-md-5 bg-dark text-light">
+                                        <div class="card-body d-flex flex-column h-100 p-4">
+                                            <h4 class="fw-bold mb-3">
+                                                {{ $item->title }}
+                                            </h4>
+                                            <p class="text-secondary">
+                                                {{ Str::limit(strip_tags($item->content), 160) }}
                                             </p>
-                                            <a href="{{ url('/cars/' . $car->id) }}"
-                                               class="btn btn-outline-dark btn-sm">
+                                            <a href="{{ route('news.detail.' . app()->getLocale(), $recentTopics->first()->id) }}"
+                                               class="btn btn-light mt-auto align-self-start px-4">
                                                 {{ __('news.read') }}
                                             </a>
                                         </div>
@@ -95,16 +83,52 @@
                         </div>
                     @endforeach
 
-                    @if ($cars->count() === 0)
-                        <div class="col-12">
-                            <div class="alert alert-secondary text-center">
-                                {{ __('news.no_results') }}
-                            </div>
-                        </div>
-                    @endif
                 </div>
-            </div>
 
+                <button class="carousel-control-prev" type="button"
+                        data-bs-target="#recentTopicsHero" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+
+                <button class="carousel-control-next" type="button"
+                        data-bs-target="#recentTopicsHero" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+
+    @endif
+
+    <div class="mt-5">
+        <h3 class="fw-bold mb-4 text-light">{{ __('news.all_news') }}</h3>
+
+        <div class="row g-4">
+            @foreach ($news as $item)
+                <div class="col-md-4 col-sm-6">
+                    <div class="card h-100 border-0 shadow-lg overflow-hidden">
+                        <img src="{{ $item->image ?? 'https://via.placeholder.com/400x250' }}"
+                             class="card-img-top"
+                             style="height: 210px; object-fit: cover;"
+                             alt="{{ $item->title }}">
+                        <div class="card-body d-flex flex-column bg-dark text-light">
+                            <h5 class="fw-semibold mb-2">
+                                {{ $item->title }}
+                            </h5>
+                            <p class="text-secondary small">
+                                {{ Str::limit(strip_tags($item->content), 90) }}
+                            </p>
+                            <a href="{{ route('news.detail.' . app()->getLocale(), $recentTopics->first()->id) }}"
+                               class="btn btn-outline-light btn-sm mt-auto align-self-start px-3">
+                                {{ __('news.read') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="d-flex justify-content-center mt-5">
+            {{ $news->withQueryString()->links('pagination::bootstrap-5') }}
         </div>
     </div>
 

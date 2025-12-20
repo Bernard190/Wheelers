@@ -40,6 +40,9 @@ Route::get('/news/en/{id}', [PageController::class, 'newsDetailEn'])
 
 Route::get('/login/id', [PageController::class, 'loginID'])->name('login');
 Route::get('/login/en', [PageController::class, 'loginEn'])->name('login');
+Route::post('/login/{lang}', [PageController::class, 'loginProcess'])
+    ->whereIn('lang', ['id', 'en'])
+    ->name('login.process');
 
 Route::resource('categories', CategoryController::class);
 Route::resource('cars', CarController::class);

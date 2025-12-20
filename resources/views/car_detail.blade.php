@@ -1,24 +1,59 @@
 @extends('layout')
 
 @section('content')
-<div class="container py-5">
-    <h1 class="mb-4">{{ $car->name }}</h1>
+<div class="container-fluid p-0">
 
-    <div class="mb-4">
-        <img src="https://via.placeholder.com/400x200" alt="Car Image" class="img-fluid">
+    <div style="height:75vh; background:#000;">
+        <img
+            src="{{ optional($car->images->first())->image_path ?? 'https://via.placeholder.com/1600x900' }}"
+            class="w-100 h-100"
+            style="object-fit:cover;"
+            alt="{{ $car->name }}"
+        >
     </div>
 
-    <div class="mb-4">
-        <p>
-            <strong>{{ __('car.description') }}:</strong>
-            {{ $car->description }}
-        </p>
+</div>
+
+<div class="container py-5 text-light">
+
+    <h1 class="fw-semibold mb-3" style="letter-spacing:1px;">
+        {{ $car->name }}
+    </h1>
+
+    <p class="text-secondary col-md-8 mb-5">
+        {{ $car->description }}
+    </p>
+
+    <div class="row text-center mb-5">
+        <div class="col-4">
+            <small class="text-secondary d-block mb-1">
+                {{ __('car.speed') }}
+            </small>
+            <span class="fs-4 fw-medium">
+                {{ $car->speed ?? '-' }}
+            </span>
+        </div>
+        <div class="col-4">
+            <small class="text-secondary d-block mb-1">
+                {{ __('car.durability') }}
+            </small>
+            <span class="fs-4 fw-medium">
+                {{ $car->durability ?? '-' }}
+            </span>
+        </div>
+        <div class="col-4">
+            <small class="text-secondary d-block mb-1">
+                {{ __('car.boost') }}
+            </small>
+            <span class="fs-4 fw-medium">
+                {{ $car->boost ?? '-' }}
+            </span>
+        </div>
     </div>
 
-    <div>
-        <p><strong>{{ __('car.speed') }}:</strong> {{ $car->speed ?? '-' }}</p>
-        <p><strong>{{ __('car.durability') }}:</strong> {{ $car->durability ?? '-' }}</p>
-        <p><strong>{{ __('car.boost') }}:</strong> {{ $car->boost ?? '-' }}</p>
-    </div>
+    <a href="{{ url()->previous() }}" class="btn btn-outline-light px-4">
+        Back
+    </a>
+
 </div>
 @endsection

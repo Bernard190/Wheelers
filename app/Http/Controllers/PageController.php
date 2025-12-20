@@ -7,6 +7,7 @@ use App\Models\Car;
 use App\Models\News;
 use App\Models\Category;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
@@ -45,10 +46,12 @@ class PageController extends Controller
     public function news(Request $request)
     {
         $query = News::query();
+
         if ($request->filled('q')) {
             $query->where('title', 'like', '%' . $request->q . '%')
-                ->orWhere('content', 'like', '%' . $request->q . '%');
+                  ->orWhere('content', 'like', '%' . $request->q . '%');
         }
+
         $news = $query->latest()->paginate(6);
         $trending = News::latest()->take(3)->get();
         $trendingIds = $trending->pluck('id')->toArray();
@@ -57,6 +60,7 @@ class PageController extends Controller
             ->take(2)
             ->get();
         $recentTopics = News::latest()->take(4)->get();
+
         return view('news', compact(
             'news',
             'recentTopics',
@@ -77,30 +81,36 @@ class PageController extends Controller
         return $this->news($request);
     }
 
-        public function cars(Request $request)
-        {
-            $categories = Category::select('id', 'name')
-                ->orderBy('name')
-                ->get();
-            $topCars = Car::with(['images', 'category'])
-                ->latest()
-                ->take(3)
-                ->get();
-            $query = Car::with(['images', 'category'])
-                ->select('cars.*');
-            if ($topCars->count()) {
-                $query->whereNotIn('cars.id', $topCars->pluck('id'));
-            }
-            if ($request->filled('q')) {
-                $query->where('cars.name', 'like', '%' . $request->q . '%');
-            }
-            if ($request->filled('category')) {
-                $query->where('cars.category_id', $request->category);
-            }
-            $cars = $query->latest()->paginate(6);
+    public function cars(Request $request)
+    {
+        $categories = Category::select('id', 'name')
+            ->orderBy('name')
+            ->get();
 
-            return view('cars', compact('cars', 'categories', 'topCars'));
+        $topCars = Car::with(['images', 'category'])
+            ->latest()
+            ->take(3)
+            ->get();
+
+        $query = Car::with(['images', 'category'])
+            ->select('cars.*');
+
+        if ($topCars->count()) {
+            $query->whereNotIn('cars.id', $topCars->pluck('id'));
         }
+
+        if ($request->filled('q')) {
+            $query->where('cars.name', 'like', '%' . $request->q . '%');
+        }
+
+        if ($request->filled('category')) {
+            $query->where('cars.category_id', $request->category);
+        }
+
+        $cars = $query->latest()->paginate(6);
+
+        return view('cars', compact('cars', 'categories', 'topCars'));
+    }
 
     public function carsID(Request $request)
     {
@@ -150,8 +160,6 @@ class PageController extends Controller
         return $this->newsDetail($id);
     }
 
-
-
     public function supportID()
     {
         App::setLocale('id');
@@ -174,5 +182,22 @@ class PageController extends Controller
     {
         App::setLocale('en');
         return view('login');
+    }
+
+    public function loginProcess(Request $request, $lang)
+    {
+        App::setLocale($lang);
+
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect("/home/$lang");
+        }
+
+        return back();
     }
 }
