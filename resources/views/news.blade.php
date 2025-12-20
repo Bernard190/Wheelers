@@ -127,10 +127,35 @@
             @endforeach
         </div>
 
-        <div class="d-flex justify-content-center mt-5">
-            {{ $news->withQueryString()->links('pagination::bootstrap-5') }}
-        </div>
+    <div class="d-flex justify-content-center mt-5">
+        {{ $news->withQueryString()->links('pagination::bootstrap-5') }}
     </div>
+
+    <style>
+        .pagination .page-link {
+            background-color: transparent !important;
+            color: #ffffff !important;
+            border: 0;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: transparent !important;
+            color: #ffffff !important;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            background-color: transparent !important;
+            color: #6c757d !important;
+        }
+
+        .pagination .page-link:hover {
+            background-color: transparent !important;
+            color: #ffffff !important;
+            text-decoration: underline;
+        }
+    </style>
 
 </div>
 

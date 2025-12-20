@@ -62,7 +62,7 @@
     <div class="container-fluid px-5">
 
         <a class="navbar-brand" href="{{ app()->getLocale() === 'id' ? url('/home/id') : url('/home/en') }}">
-            Wheelers
+            <img src="{{ asset('Wheelers.png') }}" alt="Wheelers" height="64">
         </a>
 
         <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
@@ -123,6 +123,23 @@
 <div style="padding-top: 88px;">
     @yield('content')
 </div>
+
+<footer class="bg-dark pt-4 border-top border-secondary">
+    <div class="container text-center">
+        <div class="mb-3">
+            <img src="{{ asset('Wheelers.png') }}"
+                 alt="Wheelers"
+                 class="img-fluid"
+                 style="height:70px;">
+        </div>
+        <div class="border-top border-secondary pt-3">
+            <small class="text-white">
+                © 2025 <strong>Wheelers Studio</strong>. All Rights Reserved.<br>
+                All manufacturers, brands, and logos are trademarks of their respective owners.
+            </small>
+        </div>
+    </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

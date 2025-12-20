@@ -124,7 +124,8 @@ h1, h2, h3, h4, h5 {
                 <div class="col-md-4">
                     <div class="card h-100 border-0 ui-card shadow-sm">
                         <img
-                            src="{{ $news->thumbnail ?? 'https://via.placeholder.com/400x200' }}"
+                            src="{{ asset(ltrim($news->image ?? 'news-images/placeholder.jpg', '/')) }}"
+
                             class="card-img-top"
                             style="height: 210px; object-fit: cover;"
                             alt="{{ $news->title }}"
@@ -147,11 +148,12 @@ h1, h2, h3, h4, h5 {
         </div>
     </div>
 </section>
-
 <section class="py-5" style="background:#0c0f16;">
     <div class="container text-center text-white">
         <h4 class="fw-semibold mb-4">{{ __('home.cta_title') }}</h4>
-        <a href="#" class="btn btn-outline-light btn-lg px-5 fw-semibold">
+        <a href="https://archive.org/details/1100_wheelers"
+           class="btn btn-outline-light btn-lg px-5 fw-semibold"
+           target="_blank" rel="noopener">
             {{ __('home.cta_button') }}
         </a>
     </div>

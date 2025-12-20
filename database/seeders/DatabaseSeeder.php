@@ -15,22 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
         $categories = ['Sport','Muscle','Offroad','Electric'];
         foreach ($categories as $name) {
-        \App\Models\Category::firstOrCreate(['name' => $name]);
+            \App\Models\Category::firstOrCreate(['name' => $name]);
         }
+
         \App\Models\Car::factory()
             ->count(10)
-            ->hasImages(3)
             ->create();
-        
+
+        $this->call(\Database\Seeders\CarImageSeeder::class);
+
         \App\Models\News::factory()->count(10)->create();
     }
 }

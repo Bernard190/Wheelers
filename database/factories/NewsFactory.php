@@ -17,10 +17,16 @@ class NewsFactory extends Factory
      */
     public function definition(): array
     {
+        $files = scandir(public_path('news-images'));
+
+        $files = array_values(array_filter($files, function ($file) {
+            return !in_array($file, ['.', '..']);
+        }));
+
         return [
             'title'   => fake()->sentence(6),
-            'content' => fake()->paragraph(5),
-            'image'   => fake()->imageUrl(640, 480, 'cars', true), 
+            'content' => fake()->paragraphs(10, true),
+            'image'   => '/news-images/' . $files[array_rand($files)],
         ];
     }
 }
