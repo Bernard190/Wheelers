@@ -54,6 +54,20 @@
             background: rgba(255,255,255,0.15);
             color: #fff;
         }
+
+        .dropdown-menu {
+            background: #161a24;
+            border: 1px solid #23283a;
+        }
+
+        .dropdown-item {
+            color: #e6e8ee;
+        }
+
+        .dropdown-item:hover {
+            background: #23283a;
+            color: #ffffff;
+        }
     </style>
 </head>
 <body>
@@ -71,6 +85,7 @@
 
         <div class="collapse navbar-collapse justify-content-center" id="mainNav">
             <ul class="navbar-nav">
+
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('home/*') ? 'active' : '' }}"
                        href="{{ app()->getLocale() === 'id' ? url('/home/id') : url('/home/en') }}">
@@ -98,6 +113,38 @@
                         {{ __('navbar.support') }}
                     </a>
                 </li>
+
+                @auth
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown">
+                        Admin Panel
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ route('news.index') }}">
+                                News Management
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ route('cars.index') }}">
+                                Car Management
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ route('categories.index') }}">
+                                Category Management
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @endauth
+
             </ul>
         </div>
 
@@ -109,33 +156,50 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('login/*') ? 'active' : '' }}"
-                   href="{{ app()->getLocale() === 'id' ? url('/login/id') : url('/login/en') }}">
-                    {{ __('navbar.login') }}
-                </a>
-            </li>
+            @auth
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white"
+                       href="#"
+                       data-bs-toggle="dropdown">
+                        {{ Auth::user()->name }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <form method="POST"
+                                  action="{{ app()->getLocale() === 'id' ? url('/logout/id') : url('/logout/en') }}">
+                                @csrf
+                                <button class="dropdown-item text-danger">
+                                    Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            @else
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('login/*') ? 'active' : '' }}"
+                       href="{{ app()->getLocale() === 'id' ? url('/login/id') : url('/login/en') }}">
+                        {{ __('navbar.login') }}
+                    </a>
+                </li>
+            @endauth
         </ul>
 
     </div>
 </nav>
 
-<div style="padding-top: 88px;">
+<div style="padding-top:88px;">
     @yield('content')
 </div>
 
 <footer class="bg-dark pt-4 border-top border-secondary">
     <div class="container text-center">
         <div class="mb-3">
-            <img src="{{ asset('Wheelers.png') }}"
-                 alt="Wheelers"
-                 class="img-fluid"
-                 style="height:70px;">
+            <img src="{{ asset('Wheelers.png') }}" style="height:70px;">
         </div>
         <div class="border-top border-secondary pt-3">
             <small class="text-white">
-                © 2025 <strong>Wheelers Studio</strong>. All Rights Reserved.<br>
-                All manufacturers, brands, and logos are trademarks of their respective owners.
+                © 2025 <strong>Wheelers Studio</strong>. All Rights Reserved.
             </small>
         </div>
     </div>

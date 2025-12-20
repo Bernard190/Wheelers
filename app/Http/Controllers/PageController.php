@@ -198,6 +198,11 @@ class PageController extends Controller
             return redirect("/home/$lang");
         }
 
-        return back();
+        // ❌ LOGIN GAGAL → KIRIM NOTIF
+        return back()
+            ->withInput($request->only('email'))
+            ->withErrors([
+                'login' => __('Wrong password',),
+            ]);
     }
 }

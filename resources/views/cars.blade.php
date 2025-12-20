@@ -17,7 +17,7 @@
                                onclick="event.stopPropagation()"
                                class="d-block">
                                 <img
-                                    src="{{ optional($car->images->first())->image_path ?? 'https://via.placeholder.com/1200x500' }}"
+                                    src="{{ asset(optional($car->images->first())->image_path ?? 'https://via.placeholder.com/1200x500') }}"
                                     class="d-block w-100"
                                     style="height: 440px; object-fit: cover;"
                                     alt="{{ $car->name }}"
@@ -70,10 +70,8 @@
                 <select name="category" class="form-select form-select-lg bg-dark text-light border-0">
                     <option value="">{{ __('cars.all_categories') }}</option>
                     @foreach ($categories as $category)
-                        <option
-                            value="{{ $category->id }}"
-                            {{ request('category') == $category->id ? 'selected' : '' }}
-                        >
+                        <option value="{{ $category->id }}"
+                            {{ request('category') == $category->id ? 'selected' : '' }}>
                             {{ $category->name }}
                         </option>
                     @endforeach
@@ -107,7 +105,7 @@
             <div class="col-md-4 col-sm-6">
                 <div class="card h-100 border-0 shadow-lg overflow-hidden">
                     <img
-                        src="{{ optional($car->images->first())->image_path ?? 'https://via.placeholder.com/400x250' }}"
+                        src="{{ asset(optional($car->images->first())->image_path ?? 'https://via.placeholder.com/400x250') }}"
                         class="card-img-top"
                         style="height: 220px; object-fit: cover;"
                         alt="{{ $car->name }}"
@@ -134,35 +132,35 @@
         @endforeach
     </div>
 
-<div class="d-flex justify-content-center mt-5">
-    {{ $cars->withQueryString()->links('pagination::bootstrap-5') }}
-</div>
+    <div class="d-flex justify-content-center mt-5">
+        {{ $cars->withQueryString()->links('pagination::bootstrap-5') }}
+    </div>
 
-<style>
-    .pagination .page-link {
-        background-color: transparent !important;
-        color: #ffffff !important;
-        border: 0;
-    }
+    <style>
+        .pagination .page-link {
+            background-color: transparent !important;
+            color: #ffffff !important;
+            border: 0;
+        }
 
-    .pagination .page-item.active .page-link {
-        background-color: transparent !important;
-        color: #ffffff !important;
-        font-weight: 600;
-        text-decoration: underline;
-    }
+        .pagination .page-item.active .page-link {
+            background-color: transparent !important;
+            color: #ffffff !important;
+            font-weight: 600;
+            text-decoration: underline;
+        }
 
-    .pagination .page-item.disabled .page-link {
-        background-color: transparent !important;
-        color: #6c757d !important;
-    }
+        .pagination .page-item.disabled .page-link {
+            background-color: transparent !important;
+            color: #6c757d !important;
+        }
 
-    .pagination .page-link:hover {
-        background-color: transparent !important;
-        color: #ffffff !important;
-        text-decoration: underline;
-    }
-</style>
+        .pagination .page-link:hover {
+            background-color: transparent !important;
+            color: #ffffff !important;
+            text-decoration: underline;
+        }
+    </style>
 
 </div>
 @endsection

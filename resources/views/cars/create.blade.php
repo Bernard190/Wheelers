@@ -1,45 +1,105 @@
 @extends('layout')
 
 @section('content')
-<h1>Create Car</h1>
 
-<form action="{{ route('cars.store') }}" method="POST">
-    @csrf
+<section class="py-5">
+    <div class="container">
 
-    <label>Name:</label>
-    <input type="text" name="name">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold text-white mb-0">Create Car</h3>
+            <a href="{{ route('cars.index') }}"
+               class="btn btn-outline-light btn-sm px-4">
+                Back
+            </a>
+        </div>
 
-    <br>
+        <div class="card border-0 shadow-sm mx-auto"
+             style="max-width:760px;background:#161a24;color:#e6e8ee;">
+            <div class="card-body p-4">
 
-    <label>Description:</label>
-    <textarea name="description"></textarea>
+                <form action="{{ route('cars.store') }}"
+                      method="POST"
+                      enctype="multipart/form-data">
+                    @csrf
 
-    <br>
+                    <div class="mb-3">
+                        <label class="form-label text-secondary">Car Name</label>
+                        <input type="text"
+                               name="name"
+                               class="form-control bg-dark text-light border-0"
+                               required>
+                    </div>
 
-    <label>Speed:</label>
-    <input type="number" name="speed">
+                    <div class="mb-3">
+                        <label class="form-label text-secondary">Description</label>
+                        <textarea name="description"
+                                  rows="4"
+                                  class="form-control bg-dark text-light border-0"
+                                  required></textarea>
+                    </div>
 
-    <br>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label text-secondary">Speed</label>
+                            <input type="number"
+                                   name="speed"
+                                   class="form-control bg-dark text-light border-0"
+                                   required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label text-secondary">Durability</label>
+                            <input type="number"
+                                   name="durability"
+                                   class="form-control bg-dark text-light border-0"
+                                   required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label text-secondary">Boost</label>
+                            <input type="number"
+                                   name="boost"
+                                   class="form-control bg-dark text-light border-0"
+                                   required>
+                        </div>
+                    </div>
 
-    <label>Durability:</label>
-    <input type="number" name="durability">
+                    <div class="mb-3">
+                        <label class="form-label text-secondary">Category</label>
+                        <select name="category_id"
+                                class="form-select bg-dark text-light border-0"
+                                required>
+                            @foreach ($categories as $cat)
+                                <option value="{{ $cat->id }}">
+                                    {{ $cat->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-    <br>
+                    <div class="mb-4">
+                        <label class="form-label text-secondary">Car Image</label>
+                        <input type="file"
+                               name="image"
+                               class="form-control bg-dark text-light border-0"
+                               required>
+                    </div>
 
-    <label>Boost:</label>
-    <input type="number" name="boost">
+                    <div class="d-flex gap-3">
+                        <button type="submit"
+                                class="btn btn-outline-light px-5">
+                            Save
+                        </button>
+                        <a href="{{ route('cars.index') }}"
+                           class="btn btn-outline-secondary px-5">
+                            Cancel
+                        </a>
+                    </div>
 
-    <br>
+                </form>
 
-    <label>Category:</label>
-    <select name="category_id">
-        @foreach ($categories as $cat)
-            <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-        @endforeach
-    </select>
+            </div>
+        </div>
 
-    <br><br>
+    </div>
+</section>
 
-    <button type="submit">Save</button>
-</form>
 @endsection

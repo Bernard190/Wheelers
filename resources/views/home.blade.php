@@ -58,7 +58,7 @@ h1, h2, h3, h4, h5 {
                                 <a href="{{ route('car.detail.' . app()->getLocale(), $car->id) }}"
                                    class="d-block h-100">
                                     <img
-                                        src="{{ optional($car->images->first())->image_path ?? 'https://via.placeholder.com/1400x700' }}"
+                                        src="{{ asset(optional($car->images->first())->image_path ?? 'https://via.placeholder.com/1400x700') }}"
                                         class="w-100 h-100"
                                         style="object-fit: cover; min-height: 460px;"
                                         alt="{{ $car->name }}"

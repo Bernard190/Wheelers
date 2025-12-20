@@ -5,7 +5,7 @@
 
     <div style="height:75vh; background:#000;">
         <img
-            src="{{ optional($car->images->first())->image_path ?? 'https://via.placeholder.com/1600x900' }}"
+            src="{{ asset(optional($car->images->first())->image_path ?? 'https://via.placeholder.com/400x250') }}"
             class="w-100 h-100"
             style="object-fit:cover;"
             alt="{{ $car->name }}"

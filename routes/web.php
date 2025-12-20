@@ -23,6 +23,7 @@ Route::get('/cars/en', [PageController::class, 'carsEn'])->name('cars.en');
 Route::get('/cars/id/{id}', [PageController::class, 'carDetailID'])
         ->whereNumber('id')
         ->name('car.detail.id');
+
 Route::get('/cars/en/{id}', [PageController::class, 'carDetailEn'])
         ->whereNumber('id')
         ->name('car.detail.en');
@@ -40,10 +41,18 @@ Route::get('/news/en/{id}', [PageController::class, 'newsDetailEn'])
 
 Route::get('/login/id', [PageController::class, 'loginID'])->name('login');
 Route::get('/login/en', [PageController::class, 'loginEn'])->name('login');
+Route::post('/logout/{lang}', function () {
+    Auth::logout();
+    return redirect('/');
+});
+
 Route::post('/login/{lang}', [PageController::class, 'loginProcess'])
     ->whereIn('lang', ['id', 'en'])
     ->name('login.process');
 
-Route::resource('categories', CategoryController::class);
-Route::resource('cars', CarController::class);
-Route::resource('car_images', CarImageController::class);
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('categories', CategoryController::class);
+    Route::resource('cars', CarController::class);
+    Route::resource('car_images', CarImageController::class);
+    Route::resource('news', NewsController::class);
+});

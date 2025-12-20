@@ -9,7 +9,7 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $news = News::latest()->get();
+        $news = News::latest()->paginate(6);
         return view('news.index', compact('news'));
     }
 
@@ -31,7 +31,7 @@ class NewsController extends Controller
 
     public function show(News $news)
     {
-        return view('news.show', compact('news'));
+        return redirect()->route('news.detail.' . app()->getLocale(), $news->id);
     }
 
     public function edit(News $news)
