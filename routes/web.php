@@ -7,6 +7,10 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CarImageController;
 
+Route::get('/', function () {
+    return redirect('/home/en');
+});
+
 Route::get('/home/id', [PageController::class, 'homeID'])->name('home');
 Route::get('/home/en', [PageController::class, 'homeEn'])->name('home');
 
